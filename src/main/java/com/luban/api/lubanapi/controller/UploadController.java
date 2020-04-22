@@ -28,8 +28,10 @@ import java.util.List;
 @Slf4j
 public class UploadController {
 
+
     @Value("${upload-path}")
     public String uploadPath;
+
 
     @ApiOperation("文件上传")
     @PostMapping
