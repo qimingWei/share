@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -40,27 +41,21 @@ import java.util.stream.Collectors;
 @RequestMapping("/works")
 @Api(value = "作品管理", tags = {"作品管理"})
 @Slf4j
+@RequiredArgsConstructor
 public class WorkController {
 
     private final WorkService workService;
 
-    public WorkController(WorkService workService) {
-        this.workService = workService;
-    }
-
-    @ApiOperation(value = "根据ID查询任务", httpMethod = "POST", notes = "根据ID查询任务")
+    @ApiOperation(value = "根据ID查询作品", httpMethod = "POST", notes = "根据ID查询作品")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "任务ID", dataType = "Long", required = true, paramType = "query")
+            @ApiImplicitParam(name = "work_id", value = "作品ID", dataType = "Long", required = true, paramType = "query")
     })
-    @PostMapping("/{work_id}")
-    public WorkVO findWorkById(@PathVariable Long work_id) {
+    @PostMapping("/getWorkById")
+    public WorkVO findWorkById(@RequestParam("work_id") Long work_id) {
         return WorkConvert.toVO(workService.getById(work_id));
     }
 
-    @ApiOperation(value = "查询任务列表", httpMethod = "POST", notes = "查询任务列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "dto", value = "任务查询DTO对象", dataType = "WorkQueryDTO", paramType = "query")
-    })
+    @ApiOperation(value = "查询作品列表", httpMethod = "POST", notes = "查询作品列表")
     @PostMapping
     public List<WorkVO> listAllWorks(@Valid WorkQueryDTO dto) {
         WorkVO vo = new WorkVO();
@@ -69,9 +64,6 @@ public class WorkController {
     }
 
     @ApiOperation(value = "查询基础数据", httpMethod = "POST", notes = "查询基础数据")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "dto", value = "任务查询DTO对象", dataType = "WorkQueryDTO", required = true, paramType = "query")
-    })
     @PostMapping("/has-forms")
     public List<WorkVO> listAllWorksBase(@Valid WorkQueryDTO dto) {
         WorkVO vo = new WorkVO();
@@ -79,10 +71,7 @@ public class WorkController {
         return workService.list(new QueryWrapper<>(WorkConvert.toEntity(vo))).stream().map(WorkConvert::toVO).collect(Collectors.toList());
     }
 
-    @ApiOperation(value = "分页查询任务列表", httpMethod = "POST", notes = "分页查询任务列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "dto", value = "任务查询DTO对象", dataType = "WorkQueryDTO", required = true, paramType = "query")
-    })
+    @ApiOperation(value = "分页查询作品列表", httpMethod = "POST", notes = "分页查询作品列表")
     @PostMapping("/pageable")
     public IPage<WorkVO> listWorks(@Valid WorkQueryDTO dto) {
         WorkVO vo = new WorkVO();
@@ -92,10 +81,7 @@ public class WorkController {
         return new Page<WorkVO>(page.getCurrent(), page.getSize(), page.getTotal()).setPages(page.getPages()).setRecords(voList);
     }
 
-    @ApiOperation(value = "创建任务", httpMethod = "POST", notes = "创建任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "dto", value = "任务创建DTO对象", dataType = "WorkCreateDTO", required = true, paramType = "save")
-    })
+    @ApiOperation(value = "创建作品", httpMethod = "POST", notes = "创建作品")
     @PostMapping("/save")
     public WorkVO createWork(@Valid @RequestBody WorkCreateDTO dto) {
         WorkVO vo = new WorkVO();
@@ -105,13 +91,9 @@ public class WorkController {
         return WorkConvert.toVO(work);
     }
 
-    @ApiOperation(value = "更新任务", httpMethod = "POST", notes = "更新任务")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "work_id", value = "任务创建DTO对象", dataType = "Long", required = true, paramType = "update"),
-            @ApiImplicitParam(name = "dto", value = "任务创建DTO对象", dataType = "WorkUpdateDTO", required = true, paramType = "update")
-    })
-    @PostMapping("/update/{work_id}")
-    public WorkVO updateWork(@PathVariable Long work_id, @RequestBody @Valid WorkUpdateDTO dto) {
+    @ApiOperation(value = "更新作品", httpMethod = "POST", notes = "更新作品")
+    @PostMapping("/update")
+    public WorkVO updateWork(@RequestParam("work_id") Long work_id, @Valid @RequestBody WorkUpdateDTO dto) {
         Work work = workService.getById(work_id);
         if (!StringUtils.isEmpty(dto.getTitle())) {
             work.setTitle(dto.getTitle());
@@ -122,8 +104,20 @@ public class WorkController {
         if (!StringUtils.isEmpty(dto.getCover_image_url())) {
             work.setCover_image_url(dto.getCover_image_url());
         }
+        if (!StringUtils.isEmpty(dto.getQrCodeGenerator())){
+            work.setQrCodeGenerator(dto.getQrCodeGenerator());
+        }
         if (!CollectionUtils.isEmpty(dto.getPages())) {
             work.setPages(JSON.toJSONString(dto.getPages()));
+        }
+        if(null != dto.getIs_publish() && work.getIs_publish().intValue() != dto.getIs_publish().intValue()){
+            work.setIs_publish(dto.getIs_publish());
+        }
+        if(null != dto.getIs_template() && work.getIs_template().intValue() != dto.getIs_template().intValue()){
+            work.setIs_template(dto.getIs_template());
+        }
+        if(null != dto.getIs_download() && work.getIs_download().intValue() != dto.getIs_download().intValue()){
+            work.setIs_download(dto.getIs_download());
         }
         work.setUpdateTime(LocalDateTime.now());
         workService.saveOrUpdate(work);
@@ -131,21 +125,21 @@ public class WorkController {
     }
 
 
-    @ApiOperation(value = "删除任务", httpMethod = "POST", notes = "删除任务")
+    @ApiOperation(value = "删除作品", httpMethod = "POST", notes = "删除作品")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "work_id", value = "任务ID", dataType = "Long", required = true, paramType = "delete")
+            @ApiImplicitParam(name = "work_id", value = "作品ID", dataType = "Long", required = true, paramType = "query")
     })
-    @PostMapping("/remove/{work_id}")
-    public void deleteWorkById(@PathVariable("work_id") Long work_id) {
+    @PostMapping("/remove")
+    public void deleteWorkById(@RequestParam("work_id") Long work_id) {
         workService.removeById(work_id);
     }
 
     @ApiOperation(value = "设置为模板", httpMethod = "POST", notes = "设置为模板")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "work_id", value = "任务ID", dataType = "Long", required = true, paramType = "update")
+            @ApiImplicitParam(name = "work_id", value = "作品ID", dataType = "Long", required = true, paramType = "query")
     })
-    @PostMapping("/set-as-template/{work_id}")
-    public WorkVO markWorkAsTemplate(@PathVariable Long work_id) {
+    @PostMapping("/set-as-template")
+    public WorkVO markWorkAsTemplate(@RequestParam("work_id") Long work_id) {
         Work work = workService.getById(work_id);
         work.setId(null);
         work.setIs_template(1);
@@ -155,7 +149,7 @@ public class WorkController {
         return WorkConvert.toVO(work);
     }
 
-    @ApiOperation(value = "统计总任务数", httpMethod = "POST", notes = "统计总任务数")
+    @ApiOperation(value = "统计总作品数", httpMethod = "POST", notes = "统计总作品数")
     @PostMapping("/count")
     public int countWork() {
         return workService.count();
@@ -163,10 +157,10 @@ public class WorkController {
 
     @ApiOperation(value = "使用模板", httpMethod = "POST", notes = "使用模板")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "work_id", value = "任务ID", dataType = "Long", required = true, paramType = "update")
+            @ApiImplicitParam(name = "work_id", value = "作品ID", dataType = "Long", required = true, paramType = "query")
     })
-    @PostMapping("/use-template/{work_id}")
-    public WorkVO useTemplate(@PathVariable("work_id") Long work_id) {
+    @PostMapping("/use-template")
+    public WorkVO useTemplate(@RequestParam("work_id") Long work_id) {
         Work work = workService.getById(work_id);
         work.setId(null);
         work.setIs_template(0);

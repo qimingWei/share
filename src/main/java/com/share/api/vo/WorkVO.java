@@ -25,13 +25,17 @@ public class WorkVO {
 
     private String cover_image_url;
 
+    private String qrCodeGenerator;
+
     private List<Object> pages;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
-    private int is_publish;
+    private Integer is_publish;
 
-    private int is_template;
+    private Integer is_template;
+
+    private Integer is_download;
 }

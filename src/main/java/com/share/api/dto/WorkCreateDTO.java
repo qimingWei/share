@@ -25,13 +25,17 @@ public class WorkCreateDTO {
 
     private String cover_image_url;
 
+    private String qrCodeGenerator;
+
     private List<Object> pages;
 
     private LocalDateTime createTime = LocalDateTime.now();
 
     private LocalDateTime updateTime = LocalDateTime.now();
 
-    private int is_publish;
+    private Integer is_publish;
 
-    private int is_template;
+    private Integer is_template;
+
+    private Integer is_download;
 }

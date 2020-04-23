@@ -39,14 +39,23 @@ public class Work implements Serializable {
     @ApiModelProperty(value = "封面图片")
     private String cover_image_url;
 
+    @ApiModelProperty(value = "二维码地址")
+    private String qrCodeGenerator;
+
     @ApiModelProperty(value = "页面内容")
     private String pages;
 
+    @ApiModelProperty(value = "模板类型")
+    private String workType;
+
     @ApiModelProperty(value = "是否发布")
-    private int is_publish;
+    private Integer is_publish;
 
     @ApiModelProperty(value = "是否模板")
-    private int is_template;
+    private Integer is_template;
+
+    @ApiModelProperty(value = "是否下载")
+    private Integer is_download;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
