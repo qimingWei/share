@@ -31,7 +31,7 @@ mybatis-plus:
       id-type: auto
       logic-delete-value: 1
       logic-not-delete-value: 0
-  type-aliases-package: com.luban.api.lubanapi.entity
+  type-aliases-package: com.share.api.entity
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: false
     cache-enabled: false
