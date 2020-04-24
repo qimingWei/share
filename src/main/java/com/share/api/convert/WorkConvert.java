@@ -7,11 +7,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-/**
- * Work 转换器
- *
- * @author WeiHongBin
- */
 public class WorkConvert {
 
 

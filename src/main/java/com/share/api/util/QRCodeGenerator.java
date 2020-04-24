@@ -1,10 +1,12 @@
 package com.share.api.util;
 
+import cn.hutool.http.HttpStatus;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
+import com.share.api.exception.UnifiedException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,8 +31,7 @@ public class QRCodeGenerator {
             BitMatrix bitMatrix = new MultiFormatWriter().encode(msg, BarcodeFormat.QR_CODE, width, height, map);
             MatrixToImageWriter.writeToStream(bitMatrix, format, ous);
         } catch (Exception e) {
-            e.printStackTrace();
-            return "ERROR";
+            throw new UnifiedException("导出二维码错误", e);
         }
         return path;
     }

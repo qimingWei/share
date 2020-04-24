@@ -1,6 +1,7 @@
 package com.share.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,32 +9,27 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)
-@ApiModel(value = "WorkCreateDTO")
-public class WorkCreateDTO {
+@ApiModel(value = "WorkMediaSourceCreateDTO")
+public class WorkMediaSourceCreateDTO {
 
     private String title;
 
     private String description;
 
-    private String cover_image_url;
+    private String baseUrl;
 
-    private String qrCodeGenerator;
+    private String playUrl;
 
-    private List<Object> pages;
+    private Integer isEnable = 1;
+
+    private Integer isDel = 0;
 
     private LocalDateTime createTime = LocalDateTime.now();
 
     private LocalDateTime updateTime = LocalDateTime.now();
-
-    private Integer is_publish;
-
-    private Integer is_template;
-
-    private Integer is_download;
 
 }
