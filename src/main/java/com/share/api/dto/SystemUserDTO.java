@@ -26,4 +26,7 @@ public class SystemUserDTO extends SystemUser {
 
     @ApiModelProperty(value = "验证码")
     private String verificationCode;
+
+    @ApiModelProperty(value = "是否修改密码")
+    private int updatePassword;
 }

@@ -20,6 +20,9 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     @Value("${verificationCode.timeout}")
     private Integer timeout;
 
+    @Value("${verificationCode.maxCount}")
+    private Integer maxCount;
+
     @Value("${mail.verificationCodeTemplate}")
     private String templateName;
 
@@ -33,18 +36,34 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
      * @return：void
      **/
     @Override
-    public void sendVerificationCodeByEmail(SystemUserDTO systemUser) {
-        String emailAddr = systemUser.getCheckEmail();
-        Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("verificationCode", creatVerificationCode(emailAddr));
-        dataMap.put("date", DateUtils.getTodayDate(true));
-        emailUtil.sendMail(emailAddr, "获取验证码", templateName, dataMap);
+    public RestApiResponse sendVerificationCodeByEmail(SystemUserDTO systemUser) {
+        int status = 0;
+        String message;
+        try{
+            if (checkSendCount(systemUser.getCheckEmail())) {
+                String emailAddr = systemUser.getCheckEmail();
+                Map<String, Object> dataMap = new HashMap<>();
+                dataMap.put("verificationCode", creatVerificationCode(emailAddr));
+                dataMap.put("date", DateUtils.getTodayDate(true));
+                emailUtil.sendMail(emailAddr, "获取验证码", templateName, dataMap);
+                message = "验证码已发送，请登录邮箱查看验证码";
+            } else {
+                status = -1;
+                message = "超出发送次数，请稍后重试";
+            }
+        }
+        catch (Exception e){
+            status = -1;
+            message = "发送验证码失败，请联系管理员";
+            e.printStackTrace();
+        }
+        return new RestApiResponse(status, message, null);
     }
 
     /**
      * @Author：weiqiming
      * @Description： 验证验证码
-     * @Date： 2020/5/8 10:32 
+     * @Date： 2020/5/8 10:32
      * @Param： [systemUser]
      * @return： com.buddy.sds.common.RestApiResponse
      **/
@@ -82,6 +101,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
     private String creatVerificationCode(String verificationAccount) {
         String baseCurrentTime = String.valueOf(System.currentTimeMillis());
         String verificationCode = baseCurrentTime.substring(8);
+        // 创建验证码的时间 - 通过当前时间获取的随机验证码
         String verificationCodeValue = baseCurrentTime + "-" + verificationCode;
         EnumSingleton.getVerificationCodeInstance().VerificationCode.put(verificationAccount, verificationCodeValue);
         return verificationCode;
@@ -100,6 +120,45 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
         long nowTime = System.currentTimeMillis();
         long dValue = DateUtils.minus(nowTime, checkTime, "mm");
         if (timeout < dValue) {
+            returnVal = true;
+        }
+        return returnVal;
+    }
+
+    /**
+     * @Author：weiqiming
+     * @Description： 判断当前请求验证的账号在一次有效期内是否超出请求次数
+     * @Date： 2020/5/8 16:12
+     * @Param： [checkVal]
+     * @return： boolean
+     **/
+    private boolean checkSendCount(String checkVal) {
+        boolean returnVal = false;
+        boolean initVal = false;
+        String baseCurrentTime = String.valueOf(System.currentTimeMillis());
+        String checkSendCountVal = EnumSingleton.getVerificationCodeInstance().VerificationCount.get(checkVal);
+        // 判断是否发送过验证码
+        if (null != checkSendCountVal && !("".equals(checkSendCountVal))) {
+            String[] verificationCodeInfo = checkSendCountVal.split("-");
+            String createCurrentTime = verificationCodeInfo[0];
+            int verificationCount = Integer.parseInt(verificationCodeInfo[1]);
+            // 判断是否超过验证码有效期，如果超过则重新计数。
+            if (checkTimeOut(createCurrentTime)) {
+                initVal = true;
+            } else {
+                // 判断在一次过期时间内是否超出发送邮件次数，如果超出则不让发送邮件，反之可以发送，并多记一次。
+                if (maxCount > verificationCount) {
+                    verificationCount++;
+                    EnumSingleton.getVerificationCodeInstance().VerificationCount.put(checkVal, createCurrentTime + "-" + verificationCount);
+                    returnVal = true;
+                }
+            }
+        } else {
+            initVal = true;
+        }
+        if (initVal) {
+            checkSendCountVal = baseCurrentTime + "-1";
+            EnumSingleton.getVerificationCodeInstance().VerificationCount.put(checkVal, checkSendCountVal);
             returnVal = true;
         }
         return returnVal;

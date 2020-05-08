@@ -7,4 +7,6 @@ public class VerificationCodeUtil {
 
     public Map<String, String> VerificationCode = new HashMap<>();
 
+    public Map<String, String> VerificationCount = new HashMap<>();
+
 }

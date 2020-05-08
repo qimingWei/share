@@ -10,7 +10,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -23,21 +25,37 @@ public class RbacController {
     private final SystemUserController systemUserController;
     private final VerificationCodeService verificationCodeService;
 
+    @Value("${authDepartment}")
+    private String authDepartment;
+
     @ApiOperation(value = "更新用户信息", httpMethod = "POST", notes = "更新用户信息")
     @PostMapping("/updateUser")
     public RestApiResponse updateUser(@RequestBody SystemUserDTO systemUserDTO) {
+        // 获取当前登录用户ID
+        SystemUser systemUserNow = (SystemUser) SecurityUtils.getSubject().getPrincipal();
+        systemUserDTO.setUserId(systemUserNow.getUserId());
+
         SystemUser systemUser = new SystemUser();
         BeanUtils.copyProperties(systemUserDTO, systemUser);
-        return systemUserController.updateUser(systemUser, true);
+        systemUser.setUserDepartment(authDepartment);
+        if (1 == systemUserDTO.getUpdatePassword()) {
+            RestApiResponse restApiResponse = verificationCodeService.checkVerificationCode(systemUserDTO);
+            if (0 == restApiResponse.getStatus()) {
+                restApiResponse = systemUserController.updateUser(systemUser, true);
+            }
+            return restApiResponse;
+        } else {
+            return systemUserController.updateUser(systemUser, false);
+        }
     }
 
     @ApiOperation(value = "注册用户", httpMethod = "POST", notes = "注册用户")
     @PostMapping("/addUser")
     public RestApiResponse addUser(@RequestBody SystemUserDTO systemUser) {
         RestApiResponse restApiResponse = verificationCodeService.checkVerificationCode(systemUser);
-        if(0 == restApiResponse.getStatus()){
-            String departmentId = "52dd8bec0cf189bda162d9279d386c2b";
-            systemUser.setUserDepartment(departmentId);
+        if (0 == restApiResponse.getStatus()) {
+            systemUser.setUserDepartment(authDepartment);
+            systemUser.setEmail(systemUser.getCheckEmail());
             restApiResponse = systemUserController.addUser(systemUser);
         }
         return restApiResponse;
@@ -46,17 +64,7 @@ public class RbacController {
     @ApiOperation(value = "获取验证码", httpMethod = "POST", notes = "获取验证码")
     @PostMapping("/getVerificationCode")
     public RestApiResponse getVerificationCode(@RequestBody SystemUserDTO systemUser) {
-        int status = 0;
-        String message;
-        try {
-            verificationCodeService.sendVerificationCodeByEmail(systemUser);
-            message = "已发送，请登录邮箱查看验证码";
-        } catch (Exception e) {
-            status = -1;
-            message = "获取验证码失败";
-            e.printStackTrace();
-        }
-        return new RestApiResponse(status, message, null);
+        return verificationCodeService.sendVerificationCodeByEmail(systemUser);
     }
 
     @ApiOperation(value = "获取验证码", httpMethod = "POST", notes = "获取验证码")

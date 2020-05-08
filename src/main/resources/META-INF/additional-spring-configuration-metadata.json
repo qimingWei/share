@@ -19,6 +19,21 @@
       "name": "mail.fromMail.addr",
       "type": "java.lang.String",
       "description": "发送邮件邮箱地址."
+    },
+    {
+      "name": "minio.url",
+      "type": "java.lang.String",
+      "description": "minio服务访问地址."
+    },
+    {
+      "name": "minio.access-key",
+      "type": "java.lang.String",
+      "description": "minio用户名."
+    },
+    {
+      "name": "minio.secret-key",
+      "type": "java.lang.String",
+      "description": "minio密码."
     }
   ]
 }

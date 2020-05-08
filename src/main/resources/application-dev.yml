@@ -17,5 +17,10 @@ mail:
     addr: weiqiming0608@163.com
   verificationCodeTemplate: verificationCodeTemplate.ftl
 verificationCode:
-  timeout: 30
-  maxCount: 10
+  timeout: 15
+  maxCount: 3
+authDepartment: 52dd8bec0cf189bda162d9279d386c2b
+minio:
+  url: http://192.168.1.110:18812
+  access-key: minioadmin
+  secret-key: minioadmin

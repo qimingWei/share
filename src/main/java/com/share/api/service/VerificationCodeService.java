@@ -17,7 +17,7 @@ public interface VerificationCodeService {
      * @Param： [systemUser]
      * @return： void
      **/
-    void sendVerificationCodeByEmail(SystemUserDTO systemUser);
+    RestApiResponse sendVerificationCodeByEmail(SystemUserDTO systemUser);
 
     /**
      * @Author：weiqiming
