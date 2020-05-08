@@ -1,16 +1,12 @@
 package com.share.api;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * 鲁班H5 api启动类
- *
- * @author WeiHongBin
- */
-// @SpringBootApplication(scanBasePackages = {"com.luban.api.lubanapi","com.buddy.sds"})
-// @MapperScan(basePackages = {"com.luban.api.lubanapi","com.buddy.sds"},annotationClass = Mapper.class)
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.share.api","com.buddy.sds"})
+@MapperScan(basePackages = {"com.share.api","com.buddy.sds"},annotationClass = Mapper.class)
 public class ShareApiApplication {
 
     public static void main(String[] args) {

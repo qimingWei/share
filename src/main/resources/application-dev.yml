@@ -1,6 +1,6 @@
 logging:
   level:
-    "com.luban.api.lubanapi": debug
+    "com.share.api": debug
 spring:
   datasource:
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
@@ -9,4 +9,13 @@ spring:
     password: ${H5_DB_PASSWORD:root}
   devtools:
     add-properties: true
-upload-path: ${UPLOAD_PATH:D:\\file\\}
+  freemarker:
+    template-loader-path: classpath:/templates
+upload-path: ${UPLOAD_PATH:images/}
+mail:
+  fromMail:
+    addr: weiqiming0608@163.com
+  verificationCodeTemplate: verificationCodeTemplate.ftl
+verificationCode:
+  timeout: 30
+  maxCount: 10

@@ -68,8 +68,8 @@ public class WorkServiceImpl extends ServiceImpl<WorkDao, Work> implements WorkS
         if (!StringUtils.isEmpty(dto.getDescription())) {
             work.setDescription(dto.getDescription());
         }
-        if (!StringUtils.isEmpty(dto.getCover_image_url())) {
-            work.setCover_image_url(dto.getCover_image_url());
+        if (!StringUtils.isEmpty(dto.getCoverImageUrl())) {
+            work.setCoverImageUrl(dto.getCoverImageUrl());
         }
         if (!StringUtils.isEmpty(dto.getQrCodeGenerator())) {
             work.setQrCodeGenerator(dto.getQrCodeGenerator());
@@ -77,14 +77,14 @@ public class WorkServiceImpl extends ServiceImpl<WorkDao, Work> implements WorkS
         if (!CollectionUtils.isEmpty(dto.getPages())) {
             work.setPages(JSON.toJSONString(dto.getPages()));
         }
-        if (null != dto.getIs_publish() && work.getIs_publish().intValue() != dto.getIs_publish().intValue()) {
-            work.setIs_publish(dto.getIs_publish());
+        if (null != dto.getIsPublish() && work.getIsPublish().intValue() != dto.getIsPublish().intValue()) {
+            work.setIsPublish(dto.getIsPublish());
         }
-        if (null != dto.getIs_template() && work.getIs_template().intValue() != dto.getIs_template().intValue()) {
-            work.setIs_template(dto.getIs_template());
+        if (null != dto.getIsTemplate() && work.getIsTemplate().intValue() != dto.getIsTemplate().intValue()) {
+            work.setIsTemplate(dto.getIsTemplate());
         }
-        if (null != dto.getIs_download() && work.getIs_download().intValue() != dto.getIs_download().intValue()) {
-            work.setIs_download(dto.getIs_download());
+        if (null != dto.getIsDownload() && work.getIsDownload().intValue() != dto.getIsDownload().intValue()) {
+            work.setIsDownload(dto.getIsDownload());
         }
         work.setUpdateTime(LocalDateTime.now());
         this.saveOrUpdate(work);
@@ -95,8 +95,8 @@ public class WorkServiceImpl extends ServiceImpl<WorkDao, Work> implements WorkS
     public WorkVO markWorkAsTemplate(Long work_id) {
         Work work = this.getById(work_id);
         work.setId(null);
-        work.setIs_template(1);
-        work.setIs_publish(0);
+        work.setIsTemplate(1);
+        work.setIsPublish(0);
         work.setUpdateTime(LocalDateTime.now());
         this.save(work);
         return WorkConvert.toVO(work);
@@ -106,8 +106,8 @@ public class WorkServiceImpl extends ServiceImpl<WorkDao, Work> implements WorkS
     public WorkVO useTemplate(Long work_id) {
         Work work = this.getById(work_id);
         work.setId(null);
-        work.setIs_template(0);
-        work.setIs_publish(1);
+        work.setIsTemplate(0);
+        work.setIsTemplate(1);
         this.save(work);
         return WorkConvert.toVO(work);
     }

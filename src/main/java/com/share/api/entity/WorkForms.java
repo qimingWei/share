@@ -10,13 +10,10 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * <p>
- *
- * </p>
- *
- * @author WeiHongBin
- * @since 2019-11-26
- */
+ * @Author：weiqiming
+ * @Description：
+ * @Date：2020/5/7 14:07
+ **/
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)

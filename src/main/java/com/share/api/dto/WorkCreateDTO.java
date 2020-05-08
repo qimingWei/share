@@ -1,8 +1,6 @@
 package com.share.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,20 +18,28 @@ public class WorkCreateDTO {
 
     private String description;
 
-    private String cover_image_url;
+    private String coverImageUrl;
 
     private String qrCodeGenerator;
 
     private List<Object> pages;
 
+    private Integer workType;
+
+    private Integer isPublish;
+
+    private Integer isTemplate;
+
+    private Integer isDownload;
+
+    private String liveUrlPush;
+
+    private String liveUrlPlay;
+
+    private Integer mediaSourceId;
+
     private LocalDateTime createTime = LocalDateTime.now();
 
     private LocalDateTime updateTime = LocalDateTime.now();
-
-    private Integer is_publish;
-
-    private Integer is_template;
-
-    private Integer is_download;
 
 }

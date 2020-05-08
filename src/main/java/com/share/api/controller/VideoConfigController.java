@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author weiqiming
- */
+ * @Author：weiqiming
+ * @Description：视频流配置
+ * @Date：2020/5/7 13:58
+ **/
+@Slf4j
 @RestController
 @RequestMapping("/videoConfig")
 @Api(value = "视频流配置", tags = {"视频流配置"})
-@Slf4j
 public class VideoConfigController {
 
     private static final String appName ="AppName";

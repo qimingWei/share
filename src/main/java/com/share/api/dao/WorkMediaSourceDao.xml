@@ -6,12 +6,13 @@
     <resultMap id="BaseResultMap" type="com.share.api.entity.WorkMediaSource">
         <id column="id" property="id"/>
         <result column="title" property="title"/>
-        <result column="baseUrl" property="baseUrl"/>
-        <result column="playUrl" property="playUrl"/>
-        <result column="isEnable" property="isEnable"/>
-        <result column="isDel" property="isDel"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
+        <result column="baseUrl" property="base_url"/>
+        <result column="playUrl" property="play_url"/>
+        <result column="description" property="description"/>
+        <result column="isEnable" property="is_enable"/>
+        <result column="isDel" property="is_del"/>
+        <result column="createTime" property="create_time"/>
+        <result column="updateTime" property="update_time"/>
     </resultMap>
 
 </mapper>

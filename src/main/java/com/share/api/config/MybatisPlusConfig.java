@@ -9,17 +9,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 /**
- * MyBatis Plus 配置
- *
- * @author WeiHongBin
- */
+ * @Author：weiqiming
+ * @Description：myBatis 配置
+ * @Date：2020/5/7 13:56
+ **/
 @EnableTransactionManagement
 @Configuration
 @MapperScan(PackageConstant.DAO_PACKAGE)
 public class MybatisPlusConfig {
 
     // 分页插件 @Bean public PaginationInterceptor paginationInterceptor() { return new PaginationInterceptor(); }
-
 
     /**
      * 乐观锁插件

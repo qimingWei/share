@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * @Author：weiqiming
+ * @Description：媒体资源管理
+ * @Date：2020/5/7 13:59
+ **/
 @Slf4j
 @RestController
 @RequestMapping("/workMediaSource")

@@ -6,8 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * @author WeiHongBin
- */
+ * @Author：weiqiming
+ * @Description：文件 视图对象
+ * @Date：2020/5/7 14:10
+ **/
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)

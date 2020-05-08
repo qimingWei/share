@@ -21,17 +21,20 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 异常处理
- *
- * @author WeiHongBin
- */
+ * @Author：weiqiming
+ * @Description：异常处理
+ * @Date：2020/5/7 14:08
+ **/
 @Slf4j
 @RestControllerAdvice
 public class ExceptionHandle {
 
 
-    @Autowired
-    private JSON json;
+    private final JSON json;
+
+    public ExceptionHandle(JSON json) {
+        this.json = json;
+    }
 
     /**
      * 统一异常处理器

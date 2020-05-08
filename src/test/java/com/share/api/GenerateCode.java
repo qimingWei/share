@@ -16,9 +16,9 @@ public class GenerateCode {
     private final String username = "root";
     private final String password = "root";
     private final String driverName = "com.mysql.cj.jdbc.Driver";
-    private final String author = "WeiHongBin";
-    private final String outputDir = "C:\\Users\\admin\\Desktop\\luban-api\\src\\main\\java";
-    private final String packageName = "com.luban.api.lubanapi";
+    private final String author = "Wei";
+    private final String outputDir = "C:\\Users\\admin\\Desktop\\shareApi\\src\\main\\java";
+    private final String packageName = "com.share.api";
 
     @Test
     public void getCode() {

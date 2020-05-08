@@ -1,15 +1,17 @@
 package com.share.api.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
+/**
+ * @Author：weiqiming
+ * @Description：媒体资源 创建DTO
+ * @Date：2020/5/7 14:05
+ **/
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)

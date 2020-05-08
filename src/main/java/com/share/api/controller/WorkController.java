@@ -18,10 +18,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * @Author：weiqiming
+ * @Description：作品管理
+ * @Date：2020/5/7 13:59
+ **/
+@Slf4j
 @RestController
 @RequestMapping("/works")
 @Api(value = "作品管理", tags = {"作品管理"})
-@Slf4j
 @RequiredArgsConstructor
 public class WorkController {
 
@@ -65,7 +70,6 @@ public class WorkController {
     public WorkVO updateWork(@RequestParam("work_id") Long work_id, @Valid @RequestBody WorkUpdateDTO dto) {
         return workService.updateWork(work_id, dto);
     }
-
 
     @ApiOperation(value = "删除作品", httpMethod = "POST", notes = "删除作品")
     @ApiImplicitParams({

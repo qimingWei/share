@@ -23,13 +23,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author：weiqiming
+ * @Description：文件上传
+ * @Date：2020/5/7 13:57
+ **/
+@Slf4j
 @RestController
 @RequestMapping("/fileUtil")
 @Api(value = "文件功能", tags = {"文件功能"})
-@Slf4j
 public class FileUtilController {
-
-
+    
     @Value("${upload-path}")
     public String uploadPath;
 

@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 /**
- * 统一返回
- *
- * @author WeiHongBin
- */
-@ApiModel(description = "返回响应数据")
-@Component
+ * @Author：weiqiming
+ * @Description：统一返回
+ * @Date：2020/5/7 14:11
+ **/
 @Data
+@Component
+@ApiModel(description = "返回响应数据")
 public class Result<T> {
     @ApiModelProperty(value = "返回状态码")
     private Integer code;

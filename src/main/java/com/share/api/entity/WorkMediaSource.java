@@ -11,6 +11,11 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+/**
+ * @Author：weiqiming
+ * @Description：媒体资源 实体对象
+ * @Date：2020/5/7 14:07
+ **/
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)

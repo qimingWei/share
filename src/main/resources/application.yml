@@ -24,6 +24,12 @@ spring:
       connection-timeout: 10000
       idle-timeout: 300000
       max-lifetime: 900000
+  mail:
+    host: smtp.163.com
+    username: weiqiming0608@163.com
+    password: QDMGQUARRHKYKWXZ
+    port: 25
+    default-encoding: utf-8
 mybatis-plus:
   global-config:
     banner: false
@@ -33,5 +39,5 @@ mybatis-plus:
       logic-not-delete-value: 0
   type-aliases-package: com.share.api.entity
   configuration:
-    map-underscore-to-camel-case: false
+    map-underscore-to-camel-case: true
     cache-enabled: false

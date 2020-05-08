@@ -12,13 +12,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * <p>
- *
- * </p>
- *
- * @author WeiHongBin
- * @since 2019-11-26
- */
+ * @Author：weiqiming
+ * @Description：
+ * @Date：2020/5/7 14:07
+ **/
 @Data
 @EqualsAndHashCode
 @Accessors(chain = true)
@@ -37,7 +34,7 @@ public class Work implements Serializable {
     private String description;
 
     @ApiModelProperty(value = "封面图片")
-    private String cover_image_url;
+    private String coverImageUrl;
 
     @ApiModelProperty(value = "二维码地址")
     private String qrCodeGenerator;
@@ -46,16 +43,25 @@ public class Work implements Serializable {
     private String pages;
 
     @ApiModelProperty(value = "模板类型")
-    private String workType;
+    private Integer workType;
 
     @ApiModelProperty(value = "是否发布")
-    private Integer is_publish;
+    private Integer isPublish;
 
     @ApiModelProperty(value = "是否模板")
-    private Integer is_template;
+    private Integer isTemplate;
 
     @ApiModelProperty(value = "是否下载")
-    private Integer is_download;
+    private Integer isDownload;
+
+    @ApiModelProperty(value = "直播源地址")
+    private String liveUrlPush;
+
+    @ApiModelProperty(value = "直播播放地址")
+    private String liveUrlPlay;
+
+    @ApiModelProperty(value = "媒体库元素ID")
+    private Integer mediaSourceId;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;

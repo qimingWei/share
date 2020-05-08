@@ -4,6 +4,21 @@
       "name": "upload-path",
       "type": "java.lang.String",
       "description": "文件上传路径."
+    },
+    {
+      "name": "verificationCode.timeout",
+      "type": "java.lang.Integer",
+      "description": "验证码过期时间."
+    },
+    {
+      "name": "verificationCode.maxCount",
+      "type": "java.lang.Integer",
+      "description": "最大发送次数."
+    },
+    {
+      "name": "mail.fromMail.addr",
+      "type": "java.lang.String",
+      "description": "发送邮件邮箱地址."
     }
   ]
 }

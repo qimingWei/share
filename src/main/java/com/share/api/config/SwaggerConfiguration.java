@@ -14,15 +14,14 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Swagger 文档 配置
- *
- * @author WeiHongBin
- */
+ * @Author：weiqiming
+ * @Description：Swagger 文档 配置
+ * @Date：2020/5/7 13:56
+ **/
 @Configuration
 @EnableSwagger2
 @EnableSwaggerBootstrapUi
 public class SwaggerConfiguration {
-
 
     @Bean(value = "defaultApi")
     public Docket defaultApi() {

@@ -6,4 +6,8 @@ spring:
     password: ${H5_DB_PASSWORD:root}
   devtools:
     add-properties: false
-upload-path: ${UPLOAD_PATH:"D:\h5_file"}
+upload-path: ${UPLOAD_PATH:images/}
+mail:
+  fromMail:
+    addr: weiqiming0608@163.com
+verificationCode.timeout: 5

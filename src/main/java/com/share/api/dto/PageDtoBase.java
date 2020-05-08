@@ -4,10 +4,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * 分页基类
- *
- * @author admin
- */
+ * @Author：weiqiming
+ * @Description：分页基类
+ * @Date：2020/5/7 14:01
+ **/
 @Data
 public class PageDtoBase {
     /**

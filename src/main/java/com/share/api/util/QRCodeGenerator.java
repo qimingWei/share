@@ -1,6 +1,5 @@
 package com.share.api.util;
 
-import cn.hutool.http.HttpStatus;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -14,6 +13,11 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @Author：weiqiming
+ * @Description：二维码生成
+ * @Date：2020/5/7 14:09
+ **/
 public class QRCodeGenerator {
 
     public static String getBarCode(String msg, int width, int height, String path) {
@@ -22,7 +26,6 @@ public class QRCodeGenerator {
             File file = new File(path);
             OutputStream ous = new FileOutputStream(file);
             String format = "png";
-            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
             Map<EncodeHintType, String> map = new HashMap<>();
             //设置编码 EncodeHintType类中可以设置MAX_SIZE， ERROR_CORRECTION，CHARACTER_SET，DATA_MATRIX_SHAPE，AZTEC_LAYERS等参数
             map.put(EncodeHintType.CHARACTER_SET, "UTF-8");

@@ -7,12 +7,17 @@
         <id column="id" property="id"/>
         <result column="title" property="title"/>
         <result column="description" property="description"/>
-        <result column="coverImageUrl" property="coverImageUrl"/>
+        <result column="qrCodeGenerator" property="qr_code_generator"/>
         <result column="pages" property="pages"/>
-        <result column="isPublish" property="isPublish"/>
-        <result column="isTemplate" property="isTemplate"/>
-        <result column="createTime" property="createTime"/>
-        <result column="updateTime" property="updateTime"/>
+        <result column="workType" property="work_type"/>
+        <result column="isPublish" property="is_publish"/>
+        <result column="isTemplate" property="is_template"/>
+        <result column="isDownload" property="is_download"/>
+        <result column="liveUrlPush" property="live_url_push"/>
+        <result column="liveUrlPlay" property="live_url_play"/>
+        <result column="mediaSourceId" property="media_source_id"/>
+        <result column="createTime" property="create_time"/>
+        <result column="updateTime" property="update_time"/>
     </resultMap>
 
 </mapper>

@@ -17,25 +17,32 @@ import java.util.List;
 @ApiModel(value = "Work视图对象")
 public class WorkVO {
 
-    private Long id;
-
     private String title;
 
     private String description;
 
-    private String cover_image_url;
+    private String coverImageUrl;
 
     private String qrCodeGenerator;
 
     private List<Object> pages;
 
+    private Integer workType;
+
+    private Integer isPublish;
+
+    private Integer isTemplate;
+
+    private Integer isDownload;
+
+    private String liveUrlPush;
+
+    private String liveUrlPlay;
+
+    private Integer mediaSourceId;
+
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
 
-    private Integer is_publish;
-
-    private Integer is_template;
-
-    private Integer is_download;
 }

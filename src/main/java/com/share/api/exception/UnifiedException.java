@@ -18,10 +18,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 /**
- * 统一异常
- *
- * @author WeiHongBin
- */
+ * @Author：weiqiming
+ * @Description：统一异常
+ * @Date：2020/5/7 14:08
+ **/
 @Slf4j
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -7,10 +7,15 @@ import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
 
+/**
+ * @Author：weiqiming
+ * @Description：媒体资源 查询DTO
+ * @Date：2020/5/7 14:06
+ **/
 @Data
-@EqualsAndHashCode()
 @Accessors(chain = true)
-@ApiModel(value = "WorkMediaSourceCreateDTO")
+@EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "WorkMediaSourceQueryDTO")
 public class WorkMediaSourceQueryDTO extends PageDtoBase{
 
     private Long id;

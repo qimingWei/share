@@ -14,10 +14,10 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * JSON 配置，修改默认 时间序列化格式
- *
- * @author WeiHongBin
- */
+ * @Author：weiqiming
+ * @Description：json配置
+ * @Date：2020/5/7 13:55
+ **/
 @Configuration
 public class JsonConfig {
     @Bean
