@@ -30,6 +30,8 @@ spring:
     password: QDMGQUARRHKYKWXZ
     port: 25
     default-encoding: utf-8
+  jackson:
+    serialization.FAIL_ON_EMPTY_BEANS: false
 mybatis-plus:
   global-config:
     banner: false
