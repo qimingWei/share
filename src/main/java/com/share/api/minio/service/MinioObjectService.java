@@ -16,7 +16,7 @@ public interface MinioObjectService {
     /**
      * @Author：weiqiming
      * @Description： 下载并将文件保存到本地。
-     * @Date： 2020/5/9 15:54 
+     * @Date： 2020/5/9 15:54
      * @Param： [bucketName, objectName, fileName]
      * @return： void
      **/
@@ -29,5 +29,5 @@ public interface MinioObjectService {
      * @Param： [file]
      * @return： com.buddy.sds.common.RestApiResponse
      **/
-    RestApiResponse putObject(MultipartFile file);
+    RestApiResponse putObject(MultipartFile file, String fileName);
 }

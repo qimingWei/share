@@ -54,8 +54,8 @@ public class WorkMediaSourceController {
 
     @ApiOperation(value = "更新媒体资源", httpMethod = "POST", notes = "更新媒体资源")
     @PostMapping("/update")
-    public WorkMediaSourceVO updateWorkMediaSource(@RequestParam("id") Long id, @Valid @RequestBody WorkMediaSourceUpdateDTO dto) {
-        return workMediaSourceService.updateWorkMediaSource(id, dto);
+    public WorkMediaSourceVO updateWorkMediaSource(@RequestParam("objectId") String objectId, @Valid @RequestBody WorkMediaSourceUpdateDTO dto) {
+        return workMediaSourceService.updateWorkMediaSource(objectId, dto);
     }
 
 

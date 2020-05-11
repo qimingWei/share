@@ -14,6 +14,6 @@ public interface WorkMediaSourceService extends IService<WorkMediaSource> {
 
     WorkMediaSourceVO createWorkMediaSource(WorkMediaSourceCreateDTO dto);
 
-    WorkMediaSourceVO updateWorkMediaSource(Long work_id, WorkMediaSourceUpdateDTO dto);
+    WorkMediaSourceVO updateWorkMediaSource(String objectId, WorkMediaSourceUpdateDTO dto);
 
 }

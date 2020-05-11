@@ -10,11 +10,11 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
@@ -29,11 +29,11 @@ import java.util.List;
  * @Date：2020/5/7 13:57
  **/
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/fileUtil")
 @Api(value = "文件功能", tags = {"文件功能"})
 public class FileUtilController {
-    
+
     @Value("${upload-path}")
     public String uploadPath;
 
@@ -68,6 +68,11 @@ public class FileUtilController {
     @PostMapping("/QRCodeGenerator")
     public String QRCodeGenerator(@RequestParam("msg") String msg, @RequestParam(value = "width", defaultValue = "100") int width, @RequestParam(value = "height", defaultValue = "100") int height) {
         return QRCodeGenerator.getBarCode(msg, width, height, uploadPath);
+    }
+
+    @RequestMapping("/uploadPage")
+    public String uploadPage() {
+        return "updateload";
     }
 
 }

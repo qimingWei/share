@@ -1,18 +1,20 @@
 package com.share.api.minio.service.impl;
 
 import com.buddy.sds.common.RestApiResponse;
+import com.share.api.dto.WorkMediaSourceCreateDTO;
 import com.share.api.minio.config.MinioAutoConfiguration;
 import com.share.api.minio.service.MinioObjectService;
+import com.share.api.service.WorkMediaSourceService;
+import com.share.api.util.Md5Util;
 import io.minio.MinioClient;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tika.Tika;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * @Author：weiqiming
@@ -24,7 +26,10 @@ import java.io.OutputStream;
 public class MinioObjectServiceImpl implements MinioObjectService {
 
     private final MinioAutoConfiguration minioAutoConfiguration;
+    private final WorkMediaSourceService workMediaSourceService;
 
+    @Value("${uploadInfo.bucketName}")
+    private String bucketName;
 
     /**
      * @Author：weiqiming
@@ -67,14 +72,31 @@ public class MinioObjectServiceImpl implements MinioObjectService {
      * @return： com.buddy.sds.common.RestApiResponse
      */
     @Override
-    public RestApiResponse putObject(MultipartFile file) {
+    public RestApiResponse putObject(MultipartFile file, String fileName) {
         int status = 0;
         String message;
         MinioClient minioClient = minioAutoConfiguration.minioClient();
         try {
             InputStream stream = file.getInputStream();
-            minioClient.putObject("images", "myobject", stream, stream.available(), "application/octet-stream");
+
+            String contentType;
+            contentType = new Tika().detect(stream);
+            contentType = MediaType.parseMediaType(contentType).toString();
             stream.close();
+
+            String objectId = Md5Util.getMD5String(String.valueOf(System.currentTimeMillis()));
+            stream = file.getInputStream();
+            minioClient.putObject(bucketName, objectId, stream, stream.available(), contentType);
+
+            stream.close();
+            WorkMediaSourceCreateDTO mediaSourceCreateDTO = new WorkMediaSourceCreateDTO();
+            mediaSourceCreateDTO.setObject_id(objectId);
+            mediaSourceCreateDTO.setBucket_name(bucketName);
+            mediaSourceCreateDTO.setFile_name(fileName);
+            mediaSourceCreateDTO.setObject_name(objectId);
+            mediaSourceCreateDTO.setContent_type(contentType);
+            workMediaSourceService.createWorkMediaSource(mediaSourceCreateDTO);
+
             message = "文件上传成功";
         } catch (Exception e) {
             status = -1;

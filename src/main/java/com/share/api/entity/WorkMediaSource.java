@@ -24,28 +24,28 @@ public class WorkMediaSource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @ApiModelProperty(value = "对象ID")
+    private String object_id;
 
-    @ApiModelProperty(value = "标题")
-    private String title;
+    @ApiModelProperty(value = "上传文件名")
+    private String file_name;
 
-    @ApiModelProperty(value = "描述")
+    @ApiModelProperty(value = "存储桶名称")
+    private String bucket_name;
+
+    @ApiModelProperty(value = "对象地址")
+    private String object_name;
+
+    @ApiModelProperty(value = "对象描述")
     private String description;
 
-    @ApiModelProperty(value = "视频源地址")
-    private String baseUrl;
-
-    @ApiModelProperty(value = "视频播放地址")
-    private String playUrl;
-
-    @ApiModelProperty(value = "是否启用（0：未启用；1：已启用）")
-    private Integer isEnable;
-
-    @ApiModelProperty(value = "标题")
-    private Integer isDel;
+    @ApiModelProperty(value = "内容类型")
+    private String content_type;
 
     @ApiModelProperty(value = "是否删除（0：未删除；1：已删除）")
+    private Integer isDel;
+
+    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
     @ApiModelProperty(value = "更新时间")

@@ -11,16 +11,20 @@ spring:
     add-properties: true
   freemarker:
     template-loader-path: classpath:/templates
+  thymeleaf:
+    prefix: classpath:/html/
 upload-path: ${UPLOAD_PATH:images/}
 mail:
   fromMail:
     addr: weiqiming0608@163.com
   verificationCodeTemplate: verificationCodeTemplate.ftl
 verificationCode:
-  timeout: 15
+  timeout: 5
   maxCount: 3
 authDepartment: 52dd8bec0cf189bda162d9279d386c2b
 minio:
   url: http://192.168.1.110:18812
   access-key: minioadmin
   secret-key: minioadmin
+uploadInfo:
+  bucketName: images

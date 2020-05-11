@@ -34,12 +34,13 @@ public class MinioObjectController {
     })
     public void getObject(@RequestParam("bucketName") String bucketName, @RequestParam("objectName") String objectName, @RequestParam("fileName") String fileName) {
         minioObjectService.getObject(bucketName, objectName, fileName);
+
     }
 
-    @PostMapping("putObject")
+    @PostMapping("/putObject")
     @ApiOperation(value = "上传存储对象", httpMethod = "POST", notes = "上传存储对象")
-    public RestApiResponse putObject(MultipartFile file) {
-        return minioObjectService.putObject(file);
+    public RestApiResponse putObject(MultipartFile file, @RequestParam(value = "fileName") String fileName) {
+        return minioObjectService.putObject(file,fileName);
     }
 
 }

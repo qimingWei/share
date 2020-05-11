@@ -18,15 +18,17 @@ import java.time.LocalDateTime;
 @ApiModel(value = "WorkMediaSourceCreateDTO")
 public class WorkMediaSourceCreateDTO {
 
-    private String title;
+    private String object_id;
+
+    private String bucket_name;
+
+    private String file_name;
+
+    private String object_name;
+
+    private String content_type;
 
     private String description;
-
-    private String baseUrl;
-
-    private String playUrl;
-
-    private Integer isEnable = 1;
 
     private Integer isDel = 0;
 

@@ -17,21 +17,23 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @ApiModel(value = "媒体视图对象")
 public class WorkMediaSourceVO {
-    private Long id;
 
-    private String title;
+    private String object_id;
+
+    private String bucket_name;
+
+    private String file_name;
+
+    private String object_name;
+
+    private String content_type;
 
     private String description;
-
-    private String baseUrl;
-
-    private String playUrl;
-
-    private Integer isEnable;
 
     private Integer isDel;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+    
 }

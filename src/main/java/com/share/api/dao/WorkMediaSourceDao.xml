@@ -4,13 +4,13 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.share.api.entity.WorkMediaSource">
-        <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="baseUrl" property="base_url"/>
-        <result column="playUrl" property="play_url"/>
+        <id column="object_id" property="object_id"/>
+        <result column="bucket_name" property="bucket_name"/>
+        <result column="file_name" property="file_name"/>
+        <result column="object_name" property="object_name"/>
+        <result column="content_type" property="content_type"/>
         <result column="description" property="description"/>
-        <result column="isEnable" property="is_enable"/>
-        <result column="isDel" property="is_del"/>
+        <result column="is_del" property="is_del"/>
         <result column="createTime" property="create_time"/>
         <result column="updateTime" property="update_time"/>
     </resultMap>

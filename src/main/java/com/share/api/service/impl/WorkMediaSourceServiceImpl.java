@@ -41,22 +41,19 @@ public class WorkMediaSourceServiceImpl extends ServiceImpl<WorkMediaSourceDao, 
     }
 
     @Override
-    public WorkMediaSourceVO updateWorkMediaSource(Long work_id, WorkMediaSourceUpdateDTO dto) {
-        WorkMediaSource workMediaSource = this.getById(work_id);
-        if (!StringUtils.isEmpty(dto.getTitle())) {
-            workMediaSource.setTitle(dto.getTitle());
+    public WorkMediaSourceVO updateWorkMediaSource(String objectId, WorkMediaSourceUpdateDTO dto) {
+        WorkMediaSource workMediaSource = this.getById(objectId);
+        if (!StringUtils.isEmpty(dto.getBucket_name())) {
+            workMediaSource.setBucket_name(dto.getBucket_name());
+        }
+        if (!StringUtils.isEmpty(dto.getObject_name())) {
+            workMediaSource.setObject_name(dto.getObject_name());
+        }
+        if (!StringUtils.isEmpty(dto.getContent_type())) {
+            workMediaSource.setContent_type(dto.getContent_type());
         }
         if (!StringUtils.isEmpty(dto.getDescription())) {
             workMediaSource.setDescription(dto.getDescription());
-        }
-        if (!StringUtils.isEmpty(dto.getBaseUrl())) {
-            workMediaSource.setBaseUrl(dto.getBaseUrl());
-        }
-        if (!StringUtils.isEmpty(dto.getPlayUrl())) {
-            workMediaSource.setPlayUrl(dto.getPlayUrl());
-        }
-        if (null != dto.getIsEnable() && workMediaSource.getIsEnable().intValue() != dto.getIsEnable().intValue()) {
-            workMediaSource.setIsEnable(dto.getIsEnable());
         }
         if (null != dto.getIsDel() && workMediaSource.getIsDel().intValue() != dto.getIsDel().intValue()) {
             workMediaSource.setIsDel(dto.getIsDel());

@@ -16,24 +16,24 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = true)
 @ApiModel(value = "WorkMediaSourceQueryDTO")
-public class WorkMediaSourceQueryDTO extends PageDtoBase{
+public class WorkMediaSourceQueryDTO extends PageDtoBase {
 
-    private Long id;
+    private String object_id;
 
-    private String title;
+    private String bucket_name;
+
+    private String file_name;
+
+    private String object_name;
+
+    private String content_type;
 
     private String description;
 
-    private String baseUrl;
+    private Integer isDel;
 
-    private String playUrl;
+    private LocalDateTime createTime;
 
-    private Integer isEnable = 1;
-
-    private Integer isDel = 0;
-
-    private LocalDateTime createTime = LocalDateTime.now();
-
-    private LocalDateTime updateTime = LocalDateTime.now();
+    private LocalDateTime updateTime;
 
 }
