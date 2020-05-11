@@ -8,8 +8,13 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
 
 /**
  * @Author：weiqiming
@@ -25,22 +30,19 @@ public class MinioObjectController {
 
     private final MinioObjectService minioObjectService;
 
-    @GetMapping("/downloadObject")
+    @GetMapping("/getObject")
     @ApiOperation(value = "下载存储对象", httpMethod = "POST", notes = "下载存储对象")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "bucketName", value = "存储桶名称", dataType = "String", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "objectName", value = "对象名称", dataType = "String", required = true, paramType = "query"),
-            @ApiImplicitParam(name = "fileName", value = "下载的文件名", dataType = "String", required = true, paramType = "query")
+            @ApiImplicitParam(name = "objectId", value = "存储对象ID", dataType = "String", required = true, paramType = "query")
     })
-    public void getObject(@RequestParam("bucketName") String bucketName, @RequestParam("objectName") String objectName, @RequestParam("fileName") String fileName) {
-        minioObjectService.getObject(bucketName, objectName, fileName);
-
+    public ResponseEntity<InputStreamResource> getObject(@RequestParam("objectId") String objectId) {
+        return minioObjectService.getObject(objectId);
     }
 
     @PostMapping("/putObject")
     @ApiOperation(value = "上传存储对象", httpMethod = "POST", notes = "上传存储对象")
     public RestApiResponse putObject(MultipartFile file, @RequestParam(value = "fileName") String fileName) {
-        return minioObjectService.putObject(file,fileName);
+        return minioObjectService.putObject(file, fileName);
     }
 
 }

@@ -43,14 +43,14 @@ public class WorkMediaSourceServiceImpl extends ServiceImpl<WorkMediaSourceDao, 
     @Override
     public WorkMediaSourceVO updateWorkMediaSource(String objectId, WorkMediaSourceUpdateDTO dto) {
         WorkMediaSource workMediaSource = this.getById(objectId);
-        if (!StringUtils.isEmpty(dto.getBucket_name())) {
-            workMediaSource.setBucket_name(dto.getBucket_name());
+        if (!StringUtils.isEmpty(dto.getBucketName())) {
+            workMediaSource.setBucketName(dto.getBucketName());
         }
-        if (!StringUtils.isEmpty(dto.getObject_name())) {
-            workMediaSource.setObject_name(dto.getObject_name());
+        if (!StringUtils.isEmpty(dto.getObjectName())) {
+            workMediaSource.setObjectName(dto.getObjectName());
         }
-        if (!StringUtils.isEmpty(dto.getContent_type())) {
-            workMediaSource.setContent_type(dto.getContent_type());
+        if (!StringUtils.isEmpty(dto.getContentType())) {
+            workMediaSource.setContentType(dto.getContentType());
         }
         if (!StringUtils.isEmpty(dto.getDescription())) {
             workMediaSource.setDescription(dto.getDescription());

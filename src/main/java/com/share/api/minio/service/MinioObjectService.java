@@ -3,8 +3,12 @@ package com.share.api.minio.service;
 import com.buddy.sds.common.RestApiResponse;
 import com.share.api.minio.config.MinioAutoConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.InputStream;
 
 /**
  * @Author：weiqiming
@@ -20,7 +24,7 @@ public interface MinioObjectService {
      * @Param： [bucketName, objectName, fileName]
      * @return： void
      **/
-    void getObject(String bucketName, String objectName, String fileName);
+    ResponseEntity<InputStreamResource> getObject(String objectId);
 
     /**
      * @Author：weiqiming

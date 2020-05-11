@@ -18,15 +18,17 @@ import java.time.LocalDateTime;
 @ApiModel(value = "WorkMediaSourceQueryDTO")
 public class WorkMediaSourceQueryDTO extends PageDtoBase {
 
-    private String object_id;
+    private String objectId;
 
-    private String bucket_name;
+    private String bucketName;
 
-    private String file_name;
+    private String fileName;
 
-    private String object_name;
+    private String objectName;
 
-    private String content_type;
+    private String contentType;
+
+    private Integer fileSize;
 
     private String description;
 

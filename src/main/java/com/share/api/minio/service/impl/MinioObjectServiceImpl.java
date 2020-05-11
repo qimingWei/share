@@ -1,7 +1,9 @@
 package com.share.api.minio.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.buddy.sds.common.RestApiResponse;
 import com.share.api.dto.WorkMediaSourceCreateDTO;
+import com.share.api.entity.WorkMediaSource;
 import com.share.api.minio.config.MinioAutoConfiguration;
 import com.share.api.minio.service.MinioObjectService;
 import com.share.api.service.WorkMediaSourceService;
@@ -10,11 +12,17 @@ import io.minio.MinioClient;
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @Author：weiqiming
@@ -39,28 +47,32 @@ public class MinioObjectServiceImpl implements MinioObjectService {
      * @return： void
      */
     @Override
-    public void getObject(String bucketName, String objectName, String fileName) {
+    public ResponseEntity<InputStreamResource> getObject(String objectId) {
         MinioClient minioClient = minioAutoConfiguration.minioClient();
         try {
+            WorkMediaSource workMediaSource = workMediaSourceService.getOne(new QueryWrapper<WorkMediaSource>().eq("object_id", objectId));
+
             // 调用statObject()来判断对象是否存在。
             // 如果不存在, statObject()抛出异常,
             // 否则则代表对象存在。
-            minioClient.statObject(bucketName, objectName);
-            // 读取Range
-            // headerMap.put("Range", "bytes=" + offset + "-" + (offset + length - 1L));
-            InputStream stream = minioClient.getObject("mybucket", "myobject");
-            byte[] buf = new byte[16384];
-            int flag = 0;
-            int bytesRead;
-            while ((bytesRead = stream.read(buf, 0, buf.length)) >= 0) {
-                if (flag == 0) {
-                    flag = 1;
-                    String contentType = new Tika().detect(buf);
-                }
-            }
+            minioClient.statObject(workMediaSource.getBucketName(), workMediaSource.getObjectId());
 
+            InputStream stream = minioClient.getObject(workMediaSource.getBucketName(), workMediaSource.getObjectId());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Last-Modified", workMediaSource.getCreateTime().toString());
+            headers.add("ETag", workMediaSource.getObjectId());
+            try {
+                headers.add("Content-Disposition", "inline; filename=" + new String(workMediaSource.getFileName().getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            headers.setContentLength(workMediaSource.getFileSize());
+            headers.setContentType(MediaType.parseMediaType(workMediaSource.getContentType()));
+            return new ResponseEntity<>(new InputStreamResource(stream), headers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -75,10 +87,12 @@ public class MinioObjectServiceImpl implements MinioObjectService {
     public RestApiResponse putObject(MultipartFile file, String fileName) {
         int status = 0;
         String message;
+        String data = null;
         MinioClient minioClient = minioAutoConfiguration.minioClient();
+        InputStream stream = null;
         try {
-            InputStream stream = file.getInputStream();
 
+            stream = file.getInputStream();
             String contentType;
             contentType = new Tika().detect(stream);
             contentType = MediaType.parseMediaType(contentType).toString();
@@ -86,23 +100,33 @@ public class MinioObjectServiceImpl implements MinioObjectService {
 
             String objectId = Md5Util.getMD5String(String.valueOf(System.currentTimeMillis()));
             stream = file.getInputStream();
-            minioClient.putObject(bucketName, objectId, stream, stream.available(), contentType);
+            int fileSize = stream.available();
+            minioClient.putObject(bucketName, objectId, stream, fileSize, contentType);
 
-            stream.close();
             WorkMediaSourceCreateDTO mediaSourceCreateDTO = new WorkMediaSourceCreateDTO();
-            mediaSourceCreateDTO.setObject_id(objectId);
-            mediaSourceCreateDTO.setBucket_name(bucketName);
-            mediaSourceCreateDTO.setFile_name(fileName);
-            mediaSourceCreateDTO.setObject_name(objectId);
-            mediaSourceCreateDTO.setContent_type(contentType);
+            mediaSourceCreateDTO.setObjectId(objectId);
+            mediaSourceCreateDTO.setBucketName(bucketName);
+            mediaSourceCreateDTO.setFileName(fileName);
+            mediaSourceCreateDTO.setObjectId(objectId);
+            mediaSourceCreateDTO.setContentType(contentType);
+            mediaSourceCreateDTO.setFileSize(fileSize);
             workMediaSourceService.createWorkMediaSource(mediaSourceCreateDTO);
 
             message = "文件上传成功";
+            data = objectId;
         } catch (Exception e) {
             status = -1;
             message = "上传失败，请联系管理员";
             e.printStackTrace();
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        return new RestApiResponse(status, message, null);
+        return new RestApiResponse(status, message, data);
     }
 }

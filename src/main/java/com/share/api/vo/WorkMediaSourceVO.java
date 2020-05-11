@@ -18,15 +18,17 @@ import java.time.LocalDateTime;
 @ApiModel(value = "媒体视图对象")
 public class WorkMediaSourceVO {
 
-    private String object_id;
+    private String objectId;
 
-    private String bucket_name;
+    private String bucketName;
 
-    private String file_name;
+    private String fileName;
 
-    private String object_name;
+    private String objectName;
 
-    private String content_type;
+    private String contentType;
+
+    private Integer fileSize;
 
     private String description;
 
@@ -35,5 +37,5 @@ public class WorkMediaSourceVO {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
-    
+
 }
