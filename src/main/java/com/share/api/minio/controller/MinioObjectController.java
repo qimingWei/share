@@ -9,18 +9,15 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
-
 /**
- * @Author：weiqiming
- * @Description： minioBucket 请求处理
- * @Date： 2020/5/9 11:30
- **/
+ * @Author： weiqiming
+ * @Description： minio上传文件处理
+ * @Date  2020/5/12 14:18
+**/
 @Slf4j
 @RestController
 @RequiredArgsConstructor
